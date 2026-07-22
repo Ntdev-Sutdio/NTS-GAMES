@@ -1,37 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Mock Thai Phone & OTP</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.box{
+    width:350px;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    cursor:pointer;
+}
+.phone,.otp{
+    font-size:24px;
+    text-align:center;
+    margin:15px 0;
+}
+</style>
+
+</head>
+<body>
+
+<div class="box">
+<h2>Mock OTP Generator</h2>
+
+<div class="phone" id="phone">09XXXXXXXX</div>
+
+<button onclick="randomPhone()">
+สุ่มเบอร์ไทย
+</button>
+
+<button onclick="generateOTP()">
+สร้าง OTP
+</button>
+
+<div class="otp" id="otp">------</div>
+
+</div>
+
+<script>
+
+function randomPhone(){
+
+    const prefix=["081","082","083","084","085","086","087","088","089","090","091","092","093","094","095","096","097","098","099"];
+
+    let p=prefix[Math.floor(Math.random()*prefix.length)];
+
+    let number=p;
+
+    while(number.length<10){
+        number+=Math.floor(Math.random()*10);
+    }
+
+    document.getElementById("phone").innerHTML=number;
+    document.getElementById("otp").innerHTML="------";
+
+}
+
+function generateOTP(){
+
+    let otp=Math.floor(100000+Math.random()*900000);
 
     document.getElementById("otp").innerHTML=otp;
 
 }
 
 randomPhone();
-const inbox = [];
 
-function generateOTP() {
-    const otp = Math.floor(100000 + Math.random() * 900000);
-
-    inbox.unshift({
-        from: "My App",
-        message: `รหัส OTP ของคุณคือ ${otp}`,
-        time: new Date().toLocaleTimeString()
-    });
-
-    renderInbox();
-}
-
-function renderInbox() {
-    const sms = document.getElementById("sms");
-    sms.innerHTML = "";
-
-    inbox.forEach(item => {
-        sms.innerHTML += `
-        <div class="msg">
-            <b>${item.from}</b><br>
-            ${item.message}<br>
-            <small>${item.time}</small>
-        </div>
-        `;
-    });
-}
 </script>
+
 </body>
 </html>
