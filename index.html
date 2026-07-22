@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SMS Viewer</title>
+<style>
+body{
+    font-family:Arial;
+    background:#f4f4f4;
+}
+.container{
+    width:400px;
+    margin:40px auto;
+}
+input{
+    width:100%;
+    padding:10px;
+}
+button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+.sms{
+    background:#fff;
+    margin-top:15px;
+    padding:10px;
+    border-radius:8px;
+}
+.item{
+    border-bottom:1px solid #ddd;
+    padding:8px 0;
+}
+.time{
+    color:gray;
+    font-size:12px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<input id="phone" placeholder="เบอร์โทร">
+<button onclick="loadSMS()">ค้นหา</button>
+
+<div id="smsList" class="sms"></div>
+</div>
+
+<script>
+
+async function loadSMS(){
+
+const phone=document.getElementById("phone").value;
+
+const res=await fetch("/api/sms?phone="+phone);
+
+const data=await res.json();
+
+show(data);
+
+}
+
+function show(data){
+
+let html="";
+
+data.forEach(s=>{
+
+html+=`
+<div class="item">
+<div>${s.message}</div>
+<div class="time">${s.time}</div>
+</div>
+`;
+
+});
+
+document.getElementById("smsList").innerHTML=html;
+
+}
+
+//อัปเดตทุก 5 วินาที
+setInterval(loadSMS,5000);
+
+</script>
+
+</body>
+</html>
