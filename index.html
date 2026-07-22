@@ -54,7 +54,34 @@ button{
 </div>
 
 <script>
+const inbox = [];
 
+function generateOTP() {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    inbox.unshift({
+        from: "My App",
+        message: `รหัส OTP ของคุณคือ ${otp}`,
+        time: new Date().toLocaleTimeString()
+    });
+
+    renderInbox();
+}
+
+function renderInbox() {
+    const sms = document.getElementById("sms");
+    sms.innerHTML = "";
+
+    inbox.forEach(item => {
+        sms.innerHTML += `
+        <div class="msg">
+            <b>${item.from}</b><br>
+            ${item.message}<br>
+            <small>${item.time}</small>
+        </div>
+        `;
+    });
+}
 function randomPhone(){
 
     const prefix=["081","082","083","084","085","086","087","088","089","090","091","092","093","094","095","096","097","098","099"];
